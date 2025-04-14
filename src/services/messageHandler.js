@@ -95,7 +95,7 @@ class MessageHandler {
         break;
 
       case 'ayuda_compra':
-        await whatsappService.sendMessage(to, "¡Lamentamos que estés teniendo inconvenientes! 😟\n\nPara ayudarte mejor, por favor comunícate con nuestra línea de atención al cliente.");
+        await whatsappService.sendMessage(to, "¡Lamentamos que estés teniendo inconvenientes!\n\nPara ayudarte mejor, por favor comunícate con nuestra línea de atención al cliente.");
         await whatsappService.sendContact(to, {
           name: { formatted_name: 'Servicio Al Cliente', first_name: 'Servicio', last_name: 'Al Cliente' },
           phones: [{ phone: '573160185250', type: 'CELL', wa_id: '573160185250' }],
