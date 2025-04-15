@@ -90,7 +90,7 @@ class MessageHandler {
         break;
 
       case 'hablar_asesor':
-        await whatsappService.sendMessage(to, 'Si no encontraste lo que buscabas, ¡no te preocupes! Por favor llena el siguiente formulario: https://wkf.ms/4jceQPU y en breve uno de nuestros asesores se comunicará contigo.');
+        await whatsappService.sendMessage(to, 'Si no encontraste lo que buscabas, ¡no te preocupes! Por favor llena el siguiente formulario: https://wkf.ms/3FWVjVn y en breve uno de nuestros asesores se comunicará contigo.');
         this.userStates[to] = 'esperando_asesor';
         break;
 
