@@ -1,14 +1,33 @@
 import whatsappService from './whatsappService.js';
+import appendToSheet from './googleSheetService.js';
 
 class MessageHandler {
   constructor() {
-    this.userStates = {};
+    this.userStates = {}; 
+  }
+
+  async logInteraction(userId, senderInfo, message, optionId = null, botResponse = null, linkShared = null) {
+    const rowData = [
+      new Date().toISOString(), // Corregido toIS0String -> toISOString
+      userId,                   // ID de WhatsApp (wa_id)
+      this.getSenderName(senderInfo), // Nombre del usuario (minúscula en senderInfo)
+      message.from,             // Número de teléfono
+      message.type === 'text' ? message.text.body : 'N/A', // Mensaje recibido
+      message.type,             // Tipo de mensaje
+      optionId || 'N/A',        // Corregido optional -> optionId (para consistencia)
+      this.userStates[userId] || 'N/A', // Estado del usuario
+      botResponse || 'N/A',     // Respuesta del bot
+      linkShared || 'N/A'       // Enlace compartido
+    ];                          // Corregido }; por ]
+
+    await appendToSheet(rowData);
   }
 
   async handleIncomingMessage(message, senderInfo) {
     const userId = message.from;
     const isText = message?.type === 'text' && message?.text?.body;
     const textBody = isText ? message.text.body.toLowerCase().trim() : '';
+    
 
     if (isText) {
       if (this.userStates[userId] === 'esperando_asesor') {
