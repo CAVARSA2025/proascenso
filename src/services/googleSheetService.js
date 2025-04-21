@@ -13,13 +13,16 @@ async function addRowToSheet(auth, spreadsheetId, values) {
             values: [values],
         },
         auth,
-    }
+    };
+
+    console.log('Agregando fila a Google Sheets:', values);
 
     try {
-        const response = (await sheets.spreadsheets.values.append(request).data);
+        const response = await sheets.spreadsheets.values.append(request);
         return response;
     } catch (error) {
-        console.error(error)
+        console.error('Error al agregar fila a Google Sheets:', error);
+        throw error;
     }
 }
 
@@ -31,13 +34,13 @@ const appendToSheet = async (data) => {
         });
 
         const authClient = await auth.getClient();
-        const spreadsheetId = '1OH4-THo5YAnbzxuqYVItBNUTZO63MUsNiBDaMbmt9SY'
+        const spreadsheetId = '1OH4-THo5YAnbzxuqYVItBNUTZO63MUsNiBDaMbmt9SY';
 
         await addRowToSheet(authClient, spreadsheetId, data);
-        return 'Datos correctamente agregados'
+        return 'Datos correctamente agregados';
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 export default appendToSheet;
