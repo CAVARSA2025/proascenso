@@ -28,18 +28,19 @@ async function addRowToSheet(auth, spreadsheetId, values) {
 
 const appendToSheet = async (data) => {
     try {
-        const auth = new google.auth.GoogleAuth({
-            keyFile: path.join(process.cwd(), 'src/credentials', 'credentials.json'),
-            scopes: ['https://www.googleapis.com/auth/spreadsheets']
-        });
+        const authClient = new google.auth.JWT(
+            process.env.GOOGLE_CLIENT_EMAIL,
+            null,
+            process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+            ['https://www.googleapis.com/auth/spreadsheets']
+        );
 
-        const authClient = await auth.getClient();
         const spreadsheetId = '1OH4-THo5YAnbzxuqYVItBNUTZO63MUsNiBDaMbmt9SY';
 
         await addRowToSheet(authClient, spreadsheetId, data);
         return 'Datos correctamente agregados';
     } catch (error) {
-        console.error(error);
+        console.error('Error al agregar datos:', error);
     }
 };
 
