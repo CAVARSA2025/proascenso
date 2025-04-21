@@ -6,7 +6,7 @@ const sheets = google.sheets('v4');
 async function addRowToSheet(auth, spreadsheetId, values) {
     const request = {
         spreadsheetId,
-        range: 'datosusuario',
+        range: 'chatbot',
         valueInputOption: 'RAW',
         insertDataOption: 'INSERT_ROWS',
         resource: {
